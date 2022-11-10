@@ -8,12 +8,14 @@ import xyz.cssxsh.mirai.script.command.*
 import java.io.IOException
 import javax.script.*
 
-@PublishedApi
-internal object MiraiScriptPlugin : KotlinPlugin(
+/**
+ * mirai-script-plugin 插件 主类
+ */
+public object MiraiScriptPlugin : KotlinPlugin(
     JvmPluginDescription(
         id = "xyz.cssxsh.mirai.plugin.mirai-script-plugin",
         name = "mirai-script-plugin",
-        version = "0.1.0-M1",
+        version = "1.0.0"
     ) {
         author("cssxsh")
     }
@@ -22,8 +24,8 @@ internal object MiraiScriptPlugin : KotlinPlugin(
     @PublishedApi
     internal val dependencies: MutableMap<String, List<String>> = HashMap()
 
-    @PublishedApi
-    internal lateinit var manager: ScriptEngineManager
+    public lateinit var manager: ScriptEngineManager
+        private set
 
     @PublishedApi
     internal val isEnableECMAScript: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.js").toBoolean() }
