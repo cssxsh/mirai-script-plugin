@@ -25,7 +25,7 @@ internal object MiraiLuaScriptCommand : RawCommand(
         val bindings = engine.createBindings()
         bindings["sender"] = sender
         bindings["originalMessage"] = originalMessage
-        val result = engine.eval("""return sender""", bindings)
+        val result = engine.eval(script, bindings)
 
         sender.sendMessage(result.toString())
     }
