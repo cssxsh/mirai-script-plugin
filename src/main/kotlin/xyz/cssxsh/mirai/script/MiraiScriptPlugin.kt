@@ -36,6 +36,9 @@ public object MiraiScriptPlugin : KotlinPlugin(
     @PublishedApi
     internal val isEnableRuby: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.ruby").toBoolean() }
 
+    @PublishedApi
+    internal val isEnableCommand: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.command").toBoolean() }
+
     override fun PluginComponentStorage.onLoad() {
         if (isEnableECMAScript) dependencies["ECMAScript"] = listOf(
             "com.ibm.icu:icu4j:71.1",
@@ -69,10 +72,10 @@ public object MiraiScriptPlugin : KotlinPlugin(
             ScriptEngineManager(jvmPluginClasspath.pluginClassLoader)
         }
 
-        MiraiScriptCommand.register()
+        if (isEnableCommand) MiraiScriptCommand.register()
     }
 
     override fun onDisable() {
-        MiraiScriptCommand.unregister()
+        if (isEnableCommand) MiraiScriptCommand.unregister()
     }
 }

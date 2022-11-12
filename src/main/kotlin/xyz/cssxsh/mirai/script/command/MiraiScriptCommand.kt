@@ -2,8 +2,10 @@ package xyz.cssxsh.mirai.script.command
 
 import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.message.data.*
+import net.mamoe.mirai.utils.*
 import xyz.cssxsh.mirai.script.*
-import java.time.temporal.Temporal
+import java.time.temporal.*
+import javax.script.*
 
 @PublishedApi
 internal object MiraiScriptCommand : RawCommand(
@@ -27,9 +29,19 @@ internal object MiraiScriptCommand : RawCommand(
         }
         val bindings = engine.createBindings()
         bindings["sender"] = sender
-        bindings["originalMessage"] = originalMessage
+        bindings["message"] = originalMessage
 
-        when (val result = engine.eval(script, bindings)) {
+        val result = try {
+            engine.eval(script, bindings)
+        } catch (cause: ScriptException) {
+            MiraiScriptPlugin.logger.warning({ "$type 执行错误" }, cause)
+            cause.message
+        } catch (cause: RuntimeException) {
+            MiraiScriptPlugin.logger.warning({ "$type 执行错误" }, cause)
+            cause.message
+        }
+
+        when (result) {
             is String -> sender.sendMessage(result)
             is Message -> sender.sendMessage(result)
             is Number, is Temporal -> sender.sendMessage(result.toString())
