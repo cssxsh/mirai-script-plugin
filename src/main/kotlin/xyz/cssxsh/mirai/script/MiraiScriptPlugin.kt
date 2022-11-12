@@ -33,6 +33,9 @@ public object MiraiScriptPlugin : KotlinPlugin(
     @PublishedApi
     internal val isEnablePython: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.python").toBoolean() }
 
+    @PublishedApi
+    internal val isEnableRuby: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.ruby").toBoolean() }
+
     override fun PluginComponentStorage.onLoad() {
         if (isEnableECMAScript) dependencies["ECMAScript"] = listOf(
             "com.ibm.icu:icu4j:71.1",
@@ -44,6 +47,9 @@ public object MiraiScriptPlugin : KotlinPlugin(
         )
         if (isEnablePython) dependencies["Python"] = listOf(
             "org.python:jython-standalone:2.7.3"
+        )
+        if (isEnableRuby) dependencies["Ruby"] = listOf(
+            "org.jruby:jruby-complete:9.3.9.0"
         )
     }
 
@@ -64,11 +70,13 @@ public object MiraiScriptPlugin : KotlinPlugin(
         MiraiLuaScriptCommand.register()
         MiraiECMAScriptCommand.register()
         MiraiPythonScriptCommand.register()
+        MiraiRubyScriptCommand.register()
     }
 
     override fun onDisable() {
         MiraiLuaScriptCommand.unregister()
         MiraiECMAScriptCommand.unregister()
         MiraiPythonScriptCommand.unregister()
+        MiraiRubyScriptCommand.unregister()
     }
 }

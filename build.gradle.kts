@@ -33,6 +33,8 @@ dependencies {
     compileOnly("org.graalvm.js:js-scriptengine:22.2.0")
     // python
     compileOnly("org.python:jython-standalone:2.7.3")
+    // ruby
+    compileOnly("org.jruby:jruby-complete:9.3.9.0")
     testImplementation(kotlin("test"))
     testImplementation("org.slf4j:slf4j-simple:2.0.3")
     testImplementation("net.mamoe:mirai-logging-slf4j:2.13.0-RC2")
