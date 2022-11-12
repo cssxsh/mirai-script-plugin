@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "xyz.cssxsh.mirai"
-version = "1.0.0"
+version = "1.0.1"
 
 mavenCentralPublish {
     useCentralS01()
@@ -46,6 +46,13 @@ kotlin {
 
 mirai {
     jvmTarget = JavaVersion.VERSION_11
+    setupConsoleTestRuntime {
+        jvmArgs(
+            "-Dxyz.cssxsh.mirai.script.js=true",
+            "-Dxyz.cssxsh.mirai.script.python=true",
+            "-Dxyz.cssxsh.mirai.script.ruby=true"
+        )
+    }
 }
 
 tasks {

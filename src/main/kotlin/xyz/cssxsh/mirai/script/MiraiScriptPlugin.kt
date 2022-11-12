@@ -15,7 +15,7 @@ public object MiraiScriptPlugin : KotlinPlugin(
     JvmPluginDescription(
         id = "xyz.cssxsh.mirai.plugin.mirai-script-plugin",
         name = "mirai-script-plugin",
-        version = "1.0.0"
+        version = "1.0.1"
     ) {
         author("cssxsh")
     }
@@ -51,6 +51,8 @@ public object MiraiScriptPlugin : KotlinPlugin(
         if (isEnableRuby) dependencies["Ruby"] = listOf(
             "org.jruby:jruby-complete:9.3.9.0"
         )
+
+        System.setProperty("python.console.encoding", "UTF-8")
     }
 
     override fun onEnable() {

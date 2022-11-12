@@ -11,9 +11,10 @@
 *   [Lua](https://search.maven.org/artifact/org.luaj/luaj-jse)
 *   [ECMAScript](https://search.maven.org/artifact/org.graalvm.js/js-scriptengine) `xyz.cssxsh.mirai.script.js`
 *   [Python](https://search.maven.org/artifact/org.python/jython-standalone) `xyz.cssxsh.mirai.script.python`
+*   [Ruby](https://search.maven.org/artifact/org.jruby/jruby-complete) `xyz.cssxsh.mirai.script.ruby`
 
 其中 `Lua` 是默认加载的  
-`ECMAScript` 和 `Python` 需要设置 `properties`
+`ECMAScript`, `Python`, `Ruby` 需要设置 `properties`
 
 ## 在 Mirai Console Plugin 项目中引用
 
