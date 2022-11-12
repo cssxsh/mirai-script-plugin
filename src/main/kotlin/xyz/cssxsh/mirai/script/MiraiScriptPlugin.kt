@@ -67,16 +67,10 @@ public object MiraiScriptPlugin : KotlinPlugin(
             ScriptEngineManager(jvmPluginClasspath.pluginClassLoader)
         }
 
-        MiraiLuaScriptCommand.register()
-        MiraiECMAScriptCommand.register()
-        MiraiPythonScriptCommand.register()
-        MiraiRubyScriptCommand.register()
+        MiraiScriptCommand.register()
     }
 
     override fun onDisable() {
-        MiraiLuaScriptCommand.unregister()
-        MiraiECMAScriptCommand.unregister()
-        MiraiPythonScriptCommand.unregister()
-        MiraiRubyScriptCommand.unregister()
+        MiraiScriptCommand.unregister()
     }
 }
