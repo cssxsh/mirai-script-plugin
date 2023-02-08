@@ -5,7 +5,6 @@ import net.mamoe.mirai.console.command.CommandManager.INSTANCE.unregister
 import net.mamoe.mirai.console.extension.*
 import net.mamoe.mirai.console.plugin.jvm.*
 import xyz.cssxsh.mirai.script.command.*
-import java.io.IOException
 import javax.script.*
 
 /**
@@ -41,21 +40,18 @@ public object MiraiScriptPlugin : KotlinPlugin(
 
     override fun PluginComponentStorage.onLoad() {
         if (isEnableECMAScript) dependencies["ECMAScript"] = listOf(
-            "com.ibm.icu:icu4j:71.1",
-            "org.graalvm.js:js-scriptengine:22.2.0",
-            "org.graalvm.js:js:22.2.0",
-            "org.graalvm.regex:regex:22.2.0",
-            "org.graalvm.sdk:graal-sdk:22.2.0",
-            "org.graalvm.truffle:truffle-api:22.2.0"
+            "org.graalvm.js:js-scriptengine:22.3.1",
+            "org.graalvm.js:js:22.3.1"
         )
         if (isEnablePython) dependencies["Python"] = listOf(
             "org.python:jython-standalone:2.7.3"
         )
         if (isEnableRuby) dependencies["Ruby"] = listOf(
-            "org.jruby:jruby-complete:9.3.9.0"
+            "org.jruby:jruby-complete:9.4.1.0"
         )
 
         System.setProperty("python.console.encoding", "UTF-8")
+        System.setProperty("polyglot.engine.WarnInterpreterOnly", "false")
     }
 
     override fun onEnable() {
@@ -64,7 +60,7 @@ public object MiraiScriptPlugin : KotlinPlugin(
                 logger.info("将添加 $language 脚本依赖")
                 try {
                     downloadAndAddToPath(pluginSharedLibrariesClassLoader, dependency)
-                } catch (cause: IOException) {
+                } catch (cause: Exception) {
                     logger.error("将添加 $language 脚本依赖失败", cause)
                 }
             }
