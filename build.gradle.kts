@@ -25,19 +25,26 @@ repositories {
 }
 
 dependencies {
-    compileOnly("net.mamoe:mirai-console-compiler-common:2.13.0")
+    api(kotlin("script-util"))
+    api(kotlin("scripting-compiler-embeddable"))
+    api(kotlin("compiler-embeddable"))
+    testImplementation(kotlin("test"))
     // lua
     api("org.luaj:luaj-jse:3.0.1")
     // js
-    compileOnly("org.graalvm.js:js:22.2.0")
-    compileOnly("org.graalvm.js:js-scriptengine:22.2.0")
+    compileOnly("org.graalvm.js:js:22.3.1")
+    compileOnly("org.graalvm.js:js-scriptengine:22.3.1")
     // python
     compileOnly("org.python:jython-standalone:2.7.3")
     // ruby
-    compileOnly("org.jruby:jruby-complete:9.3.9.0")
-    testImplementation(kotlin("test"))
-    testImplementation("org.slf4j:slf4j-simple:2.0.3")
-    testImplementation("net.mamoe:mirai-logging-slf4j:2.13.0-RC2")
+    compileOnly("org.jruby:jruby-complete:9.4.2.0")
+    //
+    implementation(platform("net.mamoe:mirai-bom:2.14.0"))
+    compileOnly("net.mamoe:mirai-console-compiler-common")
+    testImplementation("net.mamoe:mirai-logging-slf4j")
+    //
+    testImplementation(platform("org.slf4j:slf4j-parent:2.0.6"))
+    testImplementation("org.slf4j:slf4j-simple")
 }
 
 kotlin {
