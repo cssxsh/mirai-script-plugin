@@ -14,7 +14,7 @@ public object MiraiScriptPlugin : KotlinPlugin(
     JvmPluginDescription(
         id = "xyz.cssxsh.mirai.plugin.mirai-script-plugin",
         name = "mirai-script-plugin",
-        version = "1.0.2"
+        version = "1.1.0"
     ) {
         author("cssxsh")
     }
@@ -47,7 +47,7 @@ public object MiraiScriptPlugin : KotlinPlugin(
             "org.python:jython-standalone:2.7.3"
         )
         if (isEnableRuby) dependencies["Ruby"] = listOf(
-            "org.jruby:jruby-complete:9.4.1.0"
+            "org.jruby:jruby-complete:9.4.2.0"
         )
 
         System.setProperty("python.console.encoding", "UTF-8")

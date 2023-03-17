@@ -4,6 +4,7 @@ import net.mamoe.mirai.console.command.*
 import net.mamoe.mirai.message.data.*
 import net.mamoe.mirai.utils.*
 import xyz.cssxsh.mirai.script.*
+import java.io.*
 import java.time.temporal.*
 import javax.script.*
 
@@ -11,33 +12,28 @@ import javax.script.*
 internal object MiraiScriptCommand : RawCommand(
     owner = MiraiScriptPlugin,
     "script",
-    description = "Lua Script 命令"
+    description = "Mirai Script 命令"
 ) {
 
     override suspend fun CommandContext.onCommand(args: MessageChain) {
-        val type = args.firstOrNull()?.content ?: return
-        val script = originalMessage.contentToString().substringAfter(type, "")
-        if (script.isBlank()) {
-            sender.sendMessage("脚本从第二行开始")
-            return
-        }
+        val path = args.firstOrNull()?.content ?: return
+        val file = File(path)
+        if (file.exists().not()) return
+        val script = file.readText()
         val manager = MiraiScriptPlugin.manager
-        val engine = manager.getEngineByName(type) ?: manager.getEngineByExtension(type)
-        if (engine == null) {
-            sender.sendMessage("未启用 $type 脚本")
-            return
-        }
+        val engine = manager.getEngineByExtension(file.extension)
         val bindings = engine.createBindings()
-        bindings["sender"] = sender
+        bindings["context"] = sender
+        bindings["args"] = args
         bindings["message"] = originalMessage
 
         val result = try {
             engine.eval(script, bindings)
         } catch (cause: ScriptException) {
-            MiraiScriptPlugin.logger.warning({ "$type 执行错误" }, cause)
+            MiraiScriptPlugin.logger.warning({ "$path 执行错误" }, cause)
             cause.message
         } catch (cause: RuntimeException) {
-            MiraiScriptPlugin.logger.warning({ "$type 执行错误" }, cause)
+            MiraiScriptPlugin.logger.warning({ "$path 执行错误" }, cause)
             cause.message
         }
 

@@ -9,6 +9,7 @@
 
 本插件将加载以下 `ScriptEngineFactory`
 *   [Lua](https://search.maven.org/artifact/org.luaj/luaj-jse)
+*   [KotlinScript](https://search.maven.org/artifact/org.jetbrains.kotlin/kotlin-script-util)
 *   [ECMAScript](https://search.maven.org/artifact/org.graalvm.js/js-scriptengine) `xyz.cssxsh.mirai.script.js`
 *   [Python](https://search.maven.org/artifact/org.python/jython-standalone) `xyz.cssxsh.mirai.script.python`
 *   [Ruby](https://search.maven.org/artifact/org.jruby/jruby-complete) `xyz.cssxsh.mirai.script.ruby`

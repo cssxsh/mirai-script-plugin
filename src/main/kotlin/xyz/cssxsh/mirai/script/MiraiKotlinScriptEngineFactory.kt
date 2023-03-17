@@ -19,8 +19,9 @@ public class MiraiKotlinScriptEngineFactory : KotlinJsr223JvmScriptEngineFactory
 
     @Suppress("INVISIBLE_REFERENCE", "INVISIBLE_MEMBER")
     private val templateClasspath: List<File> by lazy {
-        val classLoader = (this::class.java.classLoader as JvmPluginClassLoaderN)
-            .openaccess.pluginSharedLibrariesClassLoader
+        val classLoader = (this::class.java.classLoader as? JvmPluginClassLoaderN)
+            ?.openaccess?.pluginSharedLibrariesClassLoader
+            ?: this::class.java.classLoader
         scriptCompilationClasspathFromContext(
             "kotlin-script-util.jar",
             classLoader = classLoader,
