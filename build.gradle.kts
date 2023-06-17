@@ -28,6 +28,7 @@ dependencies {
     api(kotlin("script-util"))
     api(kotlin("scripting-compiler-embeddable"))
     api(kotlin("compiler-embeddable"))
+    api("com.cronutils:cron-utils:9.2.1")
     testImplementation(kotlin("test"))
     // lua
     api("org.luaj:luaj-jse:3.0.1")
