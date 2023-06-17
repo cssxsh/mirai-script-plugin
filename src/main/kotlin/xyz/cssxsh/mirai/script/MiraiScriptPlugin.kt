@@ -1,9 +1,11 @@
 package xyz.cssxsh.mirai.script
 
+import kotlinx.coroutines.*
 import net.mamoe.mirai.console.command.CommandManager.INSTANCE.register
 import net.mamoe.mirai.console.command.CommandManager.INSTANCE.unregister
 import net.mamoe.mirai.console.extension.*
 import net.mamoe.mirai.console.plugin.jvm.*
+import net.mamoe.mirai.event.*
 import xyz.cssxsh.mirai.script.command.*
 import javax.script.*
 
@@ -35,9 +37,6 @@ public object MiraiScriptPlugin : KotlinPlugin(
     @PublishedApi
     internal val isEnableRuby: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.ruby").toBoolean() }
 
-    @PublishedApi
-    internal val isEnableCommand: Boolean by lazy { System.getProperty("xyz.cssxsh.mirai.script.command").toBoolean() }
-
     override fun PluginComponentStorage.onLoad() {
         if (isEnableECMAScript) dependencies["ECMAScript"] = listOf(
             "org.graalvm.js:js-scriptengine:22.3.1",
@@ -68,10 +67,14 @@ public object MiraiScriptPlugin : KotlinPlugin(
             ScriptEngineManager(jvmPluginClasspath.pluginClassLoader)
         }
 
-        if (isEnableCommand) MiraiScriptCommand.register()
+        MiraiScriptCommand.register()
+        MiraiCronCommand.register()
+        MiraiIntervalometer.registerTo(globalEventChannel())
     }
 
     override fun onDisable() {
-        if (isEnableCommand) MiraiScriptCommand.unregister()
+        MiraiIntervalometer.cancel()
+        MiraiCronCommand.unregister()
+        MiraiScriptCommand.unregister()
     }
 }

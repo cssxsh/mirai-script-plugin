@@ -56,8 +56,6 @@ mirai {
     jvmTarget = JavaVersion.VERSION_11
     setupConsoleTestRuntime {
         jvmArgs(
-            "-Dxyz.cssxsh.mirai.script.kotlin.daemon=ture",
-            "-Dxyz.cssxsh.mirai.script.command=true",
             "-Dxyz.cssxsh.mirai.script.js=true",
             "-Dxyz.cssxsh.mirai.script.python=true",
             "-Dxyz.cssxsh.mirai.script.ruby=true"
@@ -70,4 +68,3 @@ tasks {
         useJUnitPlatform()
     }
 }
-
