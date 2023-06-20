@@ -28,10 +28,12 @@ public object MiraiIntervalometer : SimpleListenerHost() {
         }
     }
 
+    private val jobs: MutableMap<String, Job> = HashMap()
+
     @PublishedApi
     internal fun loop(file: File) {
-        launch(CoroutineName("loop<${file.name}>")) {
-            logger.info("开始轮询执行脚本 $file")
+        jobs.put(file.path, launch(CoroutineName("loop<${file.name}>")) {
+            logger.info("开始轮询执行脚本 file://${file.toURI().schemeSpecificPart}")
 
             val script = file.readText()
             val manager = MiraiScriptPlugin.manager
@@ -56,7 +58,7 @@ public object MiraiIntervalometer : SimpleListenerHost() {
                     logger.warning({ "$file 执行错误" }, cause)
                 }
             }
-        }
+        })?.cancel("new loop")
     }
 
     @EventHandler
@@ -66,7 +68,7 @@ public object MiraiIntervalometer : SimpleListenerHost() {
                 if (file.canRead().not()) continue
 
                 launch(CoroutineName("startup<${file.name}>")) {
-                    logger.info("开始执行脚本 $file")
+                    logger.info("开始执行脚本 file://${file.toURI().schemeSpecificPart}")
 
                     val script = file.readText()
                     val manager = MiraiScriptPlugin.manager
